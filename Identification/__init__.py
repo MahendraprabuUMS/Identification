@@ -1,0 +1,1 @@
+from Identification.ZeroShotImageIdentification import  ZeroShotImageIdentification
