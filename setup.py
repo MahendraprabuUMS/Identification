@@ -12,7 +12,7 @@ setuptools.setup(
     author_email="",
     description="Zeroshot Image Identification",
     long_description="Zero Shot Image Identification equivalent for HuggingFace Zero Shot Text Classification - By Prithivi Da",
-    url="https://github.com/PrithivirajDamodaran/ZSI.git",
+    url="https://github.com/MahendraprabuUMS/Identification.git",
     packages=setuptools.find_packages(),
     install_requires=[],
     classifiers=[
