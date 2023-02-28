@@ -15,23 +15,7 @@ class ZeroShotImageIdentification():
   def __init__(self, 
                *args, 
                **kwargs):
-    
-         """
-          Load CLIP models based on either language needs or vision backbone needs
-          With english labelling users have the liberty to choose different vision backbones
-          Multi-lingual labelling is only supported with ViT as vision backbone.
-
-          Args:
-              Model (`str`, *optional*, defaults to `ViT-B/32`):
-                Any one of the CNN or Transformer based pretrained models can be used as Vision backbone. 
-                `RN50`, `RN101`, `RN50x4`, `RN50x16`, `RN50x64`, `ViT-B/32`, `ViT-B/16`, `ViT-L/14`
-              Lang (`str`, *optional*, defaults to `en`):
-                Any one of the language codes below
-                ar, bg, ca, cs, da, de, el, es, et, fa, fi, fr, fr-ca, gl, gu, he, hi, hr, hu, 
-                hy, id, it, ja, ka, ko, ku, lt, lv, mk, mn, mr, ms, my, nb, nl, pl, pt, pt, pt-br, 
-                ro, ru, sk, sl, sq, sr, sv, th, tr, uk, ur, vi, zh-cn, zh-tw.   
-         """
-    
+   
          if "lang" in kwargs:
             self.lang = kwargs["lang"]
          else:
@@ -60,11 +44,9 @@ class ZeroShotImageIdentification():
             print("Label language {} ...".format(self.lang))
 
   def available_models(self):
-      """Returns the names of available CLIP models"""
       return clip.available_models()
 
   def available_languages(self):
-      """Returns the codes of available languages"""
       codes = """ar, bg, ca, cs, da, de, en, el, es, et, fa, fi, fr, fr-ca, gl, gu, he, hi, hr, hu, 
       hy, id, it, ja, ka, ko, ku, lt, lv, mk, mn, mr, ms, my, nb, nl, pl, pt, pt, pt-br, 
       ro, ru, sk, sl, sq, sr, sv, th, tr, uk, ur, vi, zh-cn, zh-tw"""
@@ -72,14 +54,7 @@ class ZeroShotImageIdentification():
 
 
   def _load_image(self, image: str) -> "PIL.Image.Image":
-      """
-      Loads `image` to a PIL Image.
-      Args:
-          image (`str` ):
-              The image to convert to the PIL Image format.
-      Returns:
-          `PIL.Image.Image`: A PIL Image.
-      """
+    
       if isinstance(image, str):
           if image.startswith("http://") or image.startswith("https://"):
               image = PIL.Image.open(requests.get(image, stream=True).raw)
@@ -106,30 +81,7 @@ class ZeroShotImageIdentification():
         *args,
         **kwargs,
     ):
-
-        """
-        Classify the image using the candidate labels given
-
-        Args:
-            image (`str`):
-                Fully Qualified path of a local image or URL of image
-            candidate_labels (`str` or `List[str]`):
-                The set of possible class labels to classify each sequence into. Can be a single label, a string of
-                comma-separated labels, or a list of labels.
-            hypothesis_template (`str`, *optional*, defaults to `"A photo of {}."`, if lang is default / `en`):
-                The template used to turn each label into a string. This template must include a {} or
-                similar syntax for the candidate label to be inserted into the template. 
-            top_k (`int`, *optional*, defaults to 5):
-                The number of top labels that will be returned by the pipeline. If the provided number is higher than
-                the number of labels available in the model configuration, it will default to the number of labels.
-
-        Return:
-            A `dict` or a list of `dict`: Each result comes as a dictionary with the following keys:
-            - **image** (`str`) -- The image for which this is the output.
-            - **labels** (`List[str]`) -- The labels sorted by order of likelihood.
-            - **scores** (`List[float]`) -- The probabilities for each of the labels.
-        """
-
+    
         device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
         if self.lang == "en":
