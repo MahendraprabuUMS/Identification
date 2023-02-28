@@ -8,9 +8,7 @@ import numpy as np
 import os
 from sentence_transformers import SentenceTransformer, util
 
-
 class ZeroShotImageIdentification():
-
 
   def __init__(self, 
                *args, 
@@ -51,7 +49,6 @@ class ZeroShotImageIdentification():
       hy, id, it, ja, ka, ko, ku, lt, lv, mk, mn, mr, ms, my, nb, nl, pl, pt, pt, pt-br, 
       ro, ru, sk, sl, sq, sr, sv, th, tr, uk, ur, vi, zh-cn, zh-tw"""
       return set([code.strip() for code in codes.split(",")])
-
 
   def _load_image(self, image: str) -> "PIL.Image.Image":
     
@@ -104,14 +101,11 @@ class ZeroShotImageIdentification():
               labels = [hypothesis_template.format(candidate_label) for candidate_label in candidate_labels.split(",")]
             else:    
               labels = [hypothesis_template.format(candidate_label) for candidate_label in candidate_labels]
-
-        # TO BE IMPLEMENTED  
         if  "top_k" in kwargs:
              top_k = kwargs["top_k"] 
         else:
              top_k = len(labels)
         
-
         if str(type(self.model)) == "<class 'clip.model.CLIP'>":
             img = self.preprocess(self._load_image(image)).unsqueeze(0).to(device)
             text = clip.tokenize(labels).to(device)
@@ -137,3 +131,4 @@ class ZeroShotImageIdentification():
         preds["scores"] = scores
         preds["labels"] = candidate_labels
         return preds
+      
