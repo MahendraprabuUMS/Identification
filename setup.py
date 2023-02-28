@@ -4,7 +4,6 @@ import os
 os.system("pip install git+https://github.com/openai/CLIP.git") 
 os.system("pip install sentence-transformers")
 
-
 setuptools.setup(
     name="Identification",
     version="1.0",
